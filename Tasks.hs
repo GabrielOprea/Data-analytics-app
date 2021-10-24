@@ -3,12 +3,7 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 
-{-
-	PP Project 2021
 
-	This is where you will write the implementation for the given tasks.
-	You can add other modules aswell.
--}
 
 module Tasks where
 
@@ -26,11 +21,7 @@ type Value = String
 type Row = [Value]
 type Table = [Row]
 
-{-
-	TASK SET 1
--}
 
--- Task 1
 compute_exam_grades :: Table -> Table
 -- append the header at the start
 compute_exam_grades = \grades->(["Nume", "Punctaj Exam"]:(foldr (\lin table -> (foldlin lin) :table)
@@ -45,7 +36,6 @@ compute_exam_grades = \grades->(["Nume", "Punctaj Exam"]:(foldr (\lin table -> (
                 mean lin = (((\x->read x::Float).head.reverse) lin) + (fromIntegral $ sum $ map (\x->read x::Int)
                     $ (tail.reverse.tail.reverse) lin) / 4
 
--- Task 2
 -- Number of students who have passed the exam:
 get_passed_students_num :: Table -> Int
 -- use a filter to extract the students that have passed the exam and get the length of this list
@@ -72,7 +62,6 @@ get_passed_hw_num = \grades->(length $ filter(>= 1.5) (compute_homework_grades g
         compute_homework_grades table = map (foldl (\acc str -> (acc + (read_value str))) 0)
             $ tail $ map (tail.tail.(take 5)) table
 
--- Task 3
 get_avg_responses_per_qs :: Table -> Table
 
 -- for each question calculate the average
@@ -109,7 +98,6 @@ get_exam_summary =  \grades->(zipWith (:) header $ tr
         possible_grades exam_table = sort $ nub $ foldl (++) [] $ get_questions exam_table
 
 
--- Task 5
 get_ranking :: Table -> Table
 -- sort the table first by grade, then by name
 get_ranking = \table->(["Nume", "Punctaj Exam"]:(sortBy (\(numeX:grX) (numeY:grY)
@@ -117,7 +105,6 @@ get_ranking = \table->(["Nume", "Punctaj Exam"]:(sortBy (\(numeX:grX) (numeY:grY
     $ tail $ compute_exam_grades table))
         where
             toFloat grade = read(head grade)::Float
--- Task 6
 
 compute_diff :: Table -> Table
 -- calculates the grade at the written exam and at the interview exam.
